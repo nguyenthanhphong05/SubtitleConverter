@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 # SubtitleConverter
 Just a small java project to convert vtt/srt to lrc format, and the opposite way
-=======
+
 # Subtitle Converter
 
 Ứng dụng Java chuyển đổi phụ đề SRT/VTT sang định dạng LRC, hỗ trợ kéo-thả file, xử lý hàng loạt (batch), và đổi tên file đầu ra chỉ giữ số đầu tiên nếu muốn.
@@ -46,4 +45,3 @@ Pull request và issue luôn được chào đón!
 
 > Project Java Swing đơn giản, thích hợp cho nhu cầu chuyển đổi phụ đề sang LRC cho karaoke, học ngoại ngữ, hoặc lưu trữ cá nhân.
 > credit @kiyosnguyen5 - coded with copilot (gpt4.1)
->>>>>>> 3c50a21 (Initial commit)
