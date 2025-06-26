@@ -1,8 +1,8 @@
-# Subtitle Converter Pro
+# Subtitle Converter
 
 ![Version](https://img.shields.io/badge/version-2.1-blue.svg) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg) ![Java](https://img.shields.io/badge/Java-11%2B-orange.svg)
 
-Công cụ chuyên nghiệp giúp chuyển đổi giữa các định dạng phụ đề SRT, VTT và LRC. Hỗ trợ xử lý hàng loạt, dịch tự động bằng trí tuệ nhân tạo OpenAI, và giao diện trực quan với hai phiên bản UI (JavaFX & Swing).
+Công cụ giúp chuyển đổi giữa các định dạng phụ đề SRT, VTT và LRC. Hỗ trợ xử lý hàng loạt, dịch tự động bằng trí tuệ nhân tạo OpenAI, và giao diện trực quan với hai phiên bản UI (JavaFX & Swing).
 
 ![App Screenshot](https://raw.githubusercontent.com/nguyenthanhphong05/SubtitleConverter/main/screenshot.png)
 
