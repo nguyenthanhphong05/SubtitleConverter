@@ -67,4 +67,146 @@ public class Converter {
         int dotIndex = filename.lastIndexOf('.');
         return (dotIndex != -1) ? filename.substring(dotIndex) : "";
     }
+
+    /**
+     * Convert LRC to SRT format
+     */
+    public static void convertLrcToSrt(File lrcFile, File srtFile) throws IOException {
+        List<String> lines = Files.readAllLines(lrcFile.toPath());
+        List<LrcEntry> entries = new ArrayList<>();
+        Pattern timePattern = Pattern.compile("\\[(\\d{2}):(\\d{2})\\.(\\d{2})\\](.*)");
+        
+        // Đọc tất cả các entry từ file LRC
+        for (String line : lines) {
+            Matcher matcher = timePattern.matcher(line);
+            if (matcher.matches()) {
+                int min = Integer.parseInt(matcher.group(1));
+                int sec = Integer.parseInt(matcher.group(2));
+                int ms = Integer.parseInt(matcher.group(3)) * 10; // Convert to milliseconds
+                String text = matcher.group(4).trim();
+                
+                long startTime = (min * 60 + sec) * 1000 + ms;
+                entries.add(new LrcEntry(startTime, text));
+            }
+        }
+        
+        // Sắp xếp entries theo thời gian
+        Collections.sort(entries);
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(srtFile))) {
+            for (int i = 0; i < entries.size(); i++) {
+                LrcEntry current = entries.get(i);
+                
+                // Tính thời gian kết thúc (hoặc là thời gian bắt đầu của entry tiếp theo, hoặc + 5 giây)
+                long endTime;
+                if (i < entries.size() - 1) {
+                    endTime = entries.get(i + 1).startTime;
+                } else {
+                    endTime = current.startTime + 5000; // Thêm 5 giây cho entry cuối
+                }
+                
+                // Ghi vào file SRT
+                writer.write(String.valueOf(i + 1));
+                writer.newLine();
+                
+                // Format: 00:00:00,000 --> 00:00:00,000
+                writer.write(String.format("%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d",
+                        current.startTime / 3600000,                            // Giờ bắt đầu
+                        (current.startTime % 3600000) / 60000,                  // Phút bắt đầu
+                        (current.startTime % 60000) / 1000,                     // Giây bắt đầu
+                        current.startTime % 1000,                               // Milli bắt đầu
+                        endTime / 3600000,                                      // Giờ kết thúc
+                        (endTime % 3600000) / 60000,                            // Phút kết thúc
+                        (endTime % 60000) / 1000,                               // Giây kết thúc
+                        endTime % 1000                                          // Milli kết thúc
+                ));
+                writer.newLine();
+                
+                writer.write(current.text);
+                writer.newLine();
+                writer.newLine();
+            }
+        }
+    }
+
+    /**
+     * Convert LRC to VTT format
+     */
+    public static void convertLrcToVtt(File lrcFile, File vttFile) throws IOException {
+        List<String> lines = Files.readAllLines(lrcFile.toPath());
+        List<LrcEntry> entries = new ArrayList<>();
+        Pattern timePattern = Pattern.compile("\\[(\\d{2}):(\\d{2})\\.(\\d{2})\\](.*)");
+        
+        // Đọc tất cả các entry từ file LRC
+        for (String line : lines) {
+            Matcher matcher = timePattern.matcher(line);
+            if (matcher.matches()) {
+                int min = Integer.parseInt(matcher.group(1));
+                int sec = Integer.parseInt(matcher.group(2));
+                int ms = Integer.parseInt(matcher.group(3)) * 10; // Convert to milliseconds
+                String text = matcher.group(4).trim();
+                
+                long startTime = (min * 60 + sec) * 1000 + ms;
+                entries.add(new LrcEntry(startTime, text));
+            }
+        }
+        
+        // Sắp xếp entries theo thời gian
+        Collections.sort(entries);
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(vttFile))) {
+            // VTT header
+            writer.write("WEBVTT");
+            writer.newLine();
+            writer.newLine();
+            
+            for (int i = 0; i < entries.size(); i++) {
+                LrcEntry current = entries.get(i);
+                
+                // Tính thời gian kết thúc (hoặc là thời gian bắt đầu của entry tiếp theo, hoặc + 5 giây)
+                long endTime;
+                if (i < entries.size() - 1) {
+                    endTime = entries.get(i + 1).startTime;
+                } else {
+                    endTime = current.startTime + 5000; // Thêm 5 giây cho entry cuối
+                }
+                
+                // Ghi vào file VTT
+                // Format: 00:00:00.000 --> 00:00:00.000
+                writer.write(String.format("%02d:%02d:%02d.%03d --> %02d:%02d:%02d.%03d",
+                        current.startTime / 3600000,                            // Giờ bắt đầu
+                        (current.startTime % 3600000) / 60000,                  // Phút bắt đầu
+                        (current.startTime % 60000) / 1000,                     // Giây bắt đầu
+                        current.startTime % 1000,                               // Milli bắt đầu
+                        endTime / 3600000,                                      // Giờ kết thúc
+                        (endTime % 3600000) / 60000,                            // Phút kết thúc
+                        (endTime % 60000) / 1000,                               // Giây kết thúc
+                        endTime % 1000                                          // Milli kết thúc
+                ));
+                writer.newLine();
+                
+                writer.write(current.text);
+                writer.newLine();
+                writer.newLine();
+            }
+        }
+    }
+    
+    /**
+     * Lớp lưu trữ entry LRC
+     */
+    private static class LrcEntry implements Comparable<LrcEntry> {
+        long startTime; // thời gian tính theo milliseconds
+        String text;
+        
+        public LrcEntry(long startTime, String text) {
+            this.startTime = startTime;
+            this.text = text;
+        }
+        
+        @Override
+        public int compareTo(LrcEntry other) {
+            return Long.compare(this.startTime, other.startTime);
+        }
+    }
 }

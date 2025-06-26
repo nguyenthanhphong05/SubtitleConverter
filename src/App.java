@@ -1,9 +1,9 @@
-import ui.mainframe;
+import ui.MainApp;
+import javafx.stage.Stage;
 
 public class App {
     public static void main(String[] args) 
     {
-        mainframe frame = new mainframe();
-        frame.setVisible(true);
+        javafx.application.Application.launch(MainApp.class, args);
     }
 }

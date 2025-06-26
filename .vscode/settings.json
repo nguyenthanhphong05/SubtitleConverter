@@ -2,6 +2,8 @@
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
-    ]
+        "D:/javafx-sdk-17.0.15/lib/*.jar",
+        "lib/*.jar"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

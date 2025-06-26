@@ -1,0 +1,50 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "SwingMainApp",
+            "request": "launch",
+            "mainClass": "ui.SwingMainApp",
+            "projectName": "subtitleconverter_1b437d3e"
+        },
+        {
+            "type": "java",
+            "name": "Translator",
+            "request": "launch",
+            "mainClass": "logic.Translator",
+            "projectName": "subtitleconverter_1b437d3e"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "vmArgs": "--module-path /D:/javafx/javafx-sdk-24.0.1/lib --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "subtitleconverter_1b437d3e"
+        },
+        {
+            "type": "java",
+            "name": "Launch MainApp",
+            "request": "launch",
+            "mainClass": "ui.MainApp",
+            "vmArgs": "--module-path D:/javafx-sdk-17.0.15/lib --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "mainframe",
+            "request": "launch",
+            "mainClass": "ui.mainframe",
+            "projectName": "subtitleconverter_1b437d3e"
+        }
+    ]
+}
